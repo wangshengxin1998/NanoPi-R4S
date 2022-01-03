@@ -120,12 +120,12 @@ jobs:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: openwrt/bin
         
-    - name: 上传整个目录(当编译失败时才会上传)
+    - name: 上传build_dir目录
       uses: actions/upload-artifact@main
       if: steps.compile.outputs.status == 'failed' && env.UPLOAD_BIN_DIR == 'true'
       with:
         name: OpenWrt_dir${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-        path: openwrt
+        path: openwrt/build_dir
 
     - name: 归纳文件
       id: organize
