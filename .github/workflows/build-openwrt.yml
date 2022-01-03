@@ -68,7 +68,7 @@ jobs:
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P1_SH
 
-    - name: Update feeds
+    - name: 更新订阅源
       run: cd openwrt && ./scripts/feeds update -a
 
     - name: 安装订阅源
@@ -119,6 +119,13 @@ jobs:
       with:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: openwrt/bin
+        
+    - name: 上传整个目录(当编译失败时才会上传)
+      uses: actions/upload-artifact@main
+      if: steps.compile.outputs.status == 'failed' && env.UPLOAD_BIN_DIR == 'true'
+      with:
+        name: OpenWrt_dir${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+        path: openwrt
 
     - name: 归纳文件
       id: organize
