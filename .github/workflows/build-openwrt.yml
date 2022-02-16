@@ -189,7 +189,7 @@ jobs:
 
     - name: 移除旧发行包
       uses: dev-drprasad/delete-older-releases@v0.1.0
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      if: env.UPLOAD_RELEASE == 'true' && !cancelled() && steps.compile.outputs.status == 'success'
       with:
         keep_latest: 3
         delete_tags: true
