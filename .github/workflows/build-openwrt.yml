@@ -35,7 +35,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-21.10
 
     steps:
     - name: 签出
@@ -132,7 +132,8 @@ jobs:
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
         cd openwrt/bin/targets/*/*
-        tar zcf packages.tar.gz packages
+        tar -zcf k-packages.tar.gz packages
+        tar -zcf packages.tar.gz ../../../packages
         rm -rf packages
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
 
